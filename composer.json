@@ -2,7 +2,7 @@
     "name"       : "hoa/event",
     "description": "The Hoa\\Event library.",
     "type"       : "library",
-    "keywords"   : ["library", "event", "listener"],
+    "keywords"   : ["library", "event", "listener", "observer"],
     "homepage"   : "http://hoa-project.net/",
     "license"    : "BSD-3-Clause",
     "authors"    : [
