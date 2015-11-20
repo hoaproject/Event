@@ -36,16 +36,16 @@
 
 namespace Hoa\Event;
 
-use Hoa\Core;
+use Hoa\Exception as HoaException;
 
 /**
  * Class \Hoa\Event\Exception.
  *
- * Extending the \Hoa\Core\Exception class.
+ * Extending the \Hoa\Exception\Exception class.
  *
  * @copyright  Copyright © 2007-2015 Hoa community
  * @license    New BSD License
  */
-class Exception extends Core\Exception
+class Exception extends HoaException
 {
 }
