@@ -51,6 +51,20 @@ use Hoa\Core;
 class Event
 {
     /**
+     * Event id key.
+     *
+     * @const int
+     */
+    const KEY_EVENT  = 0;
+
+    /**
+     * Source object key.
+     *
+     * @const int
+     */
+    const KEY_SOURCE = 1;
+
+    /**
      * Static register of all observable objects, i.e. \Hoa\Event\Source
      * object, i.e. object that can send event.
      *
@@ -79,29 +93,29 @@ class Event
 
     /**
      * Manage multiton of events, with the principle of asynchronous
-     * attachements.
+     * attachments.
      *
      * @param   string  $eventId    Event ID.
      * @return  \Hoa\Core\Event
      */
     public static function getEvent($eventId)
     {
-        if (!isset(self::$_register[$eventId][0])) {
+        if (!isset(self::$_register[$eventId][self::KEY_EVENT])) {
             self::$_register[$eventId] = [
-                0 => new self(),
-                1 => null
+                self::KEY_EVENT  => new self(),
+                self::KEY_SOURCE => null
             ];
         }
 
-        return self::$_register[$eventId][0];
+        return self::$_register[$eventId][self::KEY_EVENT];
     }
 
     /**
      * Declare a new object in the observable collection.
      * Note: Hoa's libraries use hoa://Event/AnID for their observable objects;
      *
-     * @param   string             $eventId    Event ID.
-     * @param   \Hoa\Event\Source  $source     Observable object.
+     * @param   string                    $eventId    Event ID.
+     * @param   \Hoa\Event\Source|string  $source     Observable object or class.
      * @return  void
      * @throws  \Hoa\Event\Exception
      */
@@ -136,11 +150,11 @@ class Event
             }
         }
 
-        if (!isset(self::$_register[$eventId][0])) {
-            self::$_register[$eventId][0] = new self();
+        if (!isset(self::$_register[$eventId][self::KEY_EVENT])) {
+            self::$_register[$eventId][self::KEY_EVENT] = new self();
         }
 
-        self::$_register[$eventId][1] = $source;
+        self::$_register[$eventId][self::KEY_SOURCE] = $source;
 
         return;
     }
@@ -158,7 +172,7 @@ class Event
         if (false !== $hard) {
             unset(self::$_register[$eventId]);
         } else {
-            self::$_register[$eventId][1] = null;
+            self::$_register[$eventId][self::KEY_SOURCE] = null;
         }
 
         return;
@@ -243,7 +257,7 @@ class Event
     {
         return
             array_key_exists($eventId, self::$_register) &&
-            self::$_register[$eventId][1] !== null;
+            self::$_register[$eventId][self::KEY_SOURCE] !== null;
     }
 }
 
