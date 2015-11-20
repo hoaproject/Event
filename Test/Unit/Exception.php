@@ -55,6 +55,6 @@ class Exception extends Test\Unit\Suite
             ->when($result = new SUT('foo', 0))
             ->then
                 ->object($result)
-                    ->isInstanceOf('Hoa\Core\Exception');
+                    ->isInstanceOf('Hoa\Exception\Exception');
     }
 }
