@@ -96,7 +96,7 @@ class Event
      * attachments.
      *
      * @param   string  $eventId    Event ID.
-     * @return  \Hoa\Core\Event
+     * @return  \Hoa\Event\Event
      */
     public static function getEvent($eventId)
     {
@@ -132,7 +132,7 @@ class Event
 
         if (is_object($source) && !($source instanceof Source)) {
             throw new Exception(
-                'The source must implement \Hoa\Core\Event\Source ' .
+                'The source must implement \Hoa\Event\Source ' .
                 'interface; given %s.',
                 1,
                 get_class($source)
@@ -142,7 +142,7 @@ class Event
 
             if (false === $reflection->implementsInterface('\Hoa\Event\Source')) {
                 throw new Exception(
-                    'The source must implement \Hoa\Core\Event\Source ' .
+                    'The source must implement \Hoa\Event\Source ' .
                     'interface; given %s.',
                     2,
                     $source
@@ -184,7 +184,7 @@ class Event
      * \Hoa\Core\Consistency\Xcallable class).
      *
      * @param   mixed   $callable    Callable.
-     * @return  \Hoa\Core\Event
+     * @return  \Hoa\Event\Event
      */
     public function attach($callable)
     {
