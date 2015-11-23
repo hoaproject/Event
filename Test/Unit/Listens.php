@@ -54,7 +54,7 @@ class Listens extends Test\Unit\Suite
     {
         $this
             ->given(
-                $listenable = new Listenable(),
+                $listenable = new _Listenable(),
                 $listener   = new LUT\Listener($listenable, ['foo'])
             )
             ->when($result = $listenable->_setListener($listener))
@@ -67,7 +67,7 @@ class Listens extends Test\Unit\Suite
     {
         $this
             ->given(
-                $listenable = new Listenable(),
+                $listenable = new _Listenable(),
                 $listener   = new LUT\Listener($listenable, ['foo']),
                 $listenable->_setListener($listener)
             )
@@ -81,7 +81,7 @@ class Listens extends Test\Unit\Suite
     {
         $this
             ->given(
-                $listenable = new Listenable(),
+                $listenable = new _Listenable(),
                 $listener   = new LUT\Listener($listenable, ['foo']),
                 $listenable->_setListener($listener),
                 $callable   = function () use (&$called) {
@@ -105,7 +105,7 @@ class Listens extends Test\Unit\Suite
     {
         $this
             ->given(
-                $listenable = new Listenable(),
+                $listenable = new _Listenable(),
                 $listener   = new LUT\Listener($listenable, ['foo']),
                 $listenable->_setListener($listener)
             )
@@ -116,7 +116,7 @@ class Listens extends Test\Unit\Suite
     }
 }
 
-class Listenable implements LUT\Listenable
+class _Listenable implements LUT\Listenable
 {
     use SUT;
 
