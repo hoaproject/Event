@@ -51,7 +51,7 @@ use Hoa\Core;
 class Event
 {
     /**
-     * Event id key.
+     * Event ID key.
      *
      * @const int
      */
