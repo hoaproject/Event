@@ -36,7 +36,7 @@
 
 namespace Hoa\Event;
 
-use Hoa\Core;
+use Hoa\Consistency;
 
 /**
  * Class \Hoa\Event\Event.
@@ -181,7 +181,7 @@ class Event
     /**
      * Attach an object to an event.
      * It can be a callable or an accepted callable form (please, see the
-     * \Hoa\Core\Consistency\Xcallable class).
+     * \Hoa\Consistency\Xcallable class).
      *
      * @param   mixed   $callable    Callable.
      * @return  \Hoa\Event\Event
@@ -264,4 +264,4 @@ class Event
 /**
  * Flex entity.
  */
-Core\Consistency::flexEntity('Hoa\Event\Event');
+Consistency::flexEntity('Hoa\Event\Event');
