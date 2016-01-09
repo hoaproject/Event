@@ -8,7 +8,7 @@
  *
  * New BSD License
  *
- * Copyright © 2007-2015, Hoa community. All rights reserved.
+ * Copyright © 2007-2016, Hoa community. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
@@ -42,7 +42,7 @@ namespace Hoa\Event;
  * A contrario of events, listeners are synchronous, identified at use and
  * useful for close interactions between one or some components.
  *
- * @copyright  Copyright © 2007-2015 Hoa community
+ * @copyright  Copyright © 2007-2016 Hoa community
  * @license    New BSD License
  */
 class Listener
@@ -70,7 +70,7 @@ class Listener
      * @param   array                  $ids       Accepted ID.
      * @return  void
      */
-    public function __construct(Listenable $source, Array $ids)
+    public function __construct(Listenable $source, array $ids)
     {
         $this->_source = $source;
         $this->addIds($ids);
@@ -84,7 +84,7 @@ class Listener
      * @param   array  $ids    Accepted ID.
      * @return  void
      */
-    public function addIds(Array $ids)
+    public function addIds(array $ids)
     {
         foreach ($ids as $id) {
             $this->_callables[$id] = [];
