@@ -6,6 +6,7 @@
   * Consistency: Use `Hoa\Consistency`. (Ivan Enderlin, 2015-12-08T11:10:00+01:00)
   * Documentation: Fix typos. (Ivan Enderlin, 2015-11-23T22:05:56+01:00)
   * Exception: Use `Hoa\Exception`. (Ivan Enderlin, 2015-11-20T07:40:34+01:00)
+
 # 0.15.11.23
 
   * Documentation: Fix typos. (Ivan Enderlin, 2015-11-23T22:05:56+01:00)
