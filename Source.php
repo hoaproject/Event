@@ -39,7 +39,7 @@ namespace Hoa\Event;
 /**
  * Interface \Hoa\Event\Source.
  *
- * Each object which is observable must implement this interface.
+ * Each object which is listenable must implement this interface.
  *
  * @copyright  Copyright © 2007-2016 Hoa community
  * @license    New BSD License
