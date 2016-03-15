@@ -1,3 +1,8 @@
+# 1.16.03.15
+
+  * Fix a typo (Metalaka, 2016-01-28T09:05:40+01:00)
+  * CHANGELOG: Add a missing newline. (Ivan Enderlin, 2016-01-11T09:37:32+01:00)
+
 # 1.16.01.11
 
   * Quality: Drop PHP5.4. (Ivan Enderlin, 2016-01-11T09:15:26+01:00)
