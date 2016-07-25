@@ -79,6 +79,10 @@ class Event
      */
     protected $_callable      = [];
 
+    /**
+     * @var array
+     */
+    protected $_priorities = [];
 
 
     /**
@@ -186,10 +190,23 @@ class Event
      * @param   mixed   $callable    Callable.
      * @return  \Hoa\Event\Event
      */
-    public function attach($callable)
+    public function attach($callable, $priority = 0)
     {
-        $callable                              = xcallable($callable);
-        $this->_callable[$callable->getHash()] = $callable;
+        $callable                 = xcallable($callable);
+        $hash                     = $callable->getHash();
+        $this->_callable[$hash]   = $callable;
+        $this->_priorities[$hash] = (int) $priority;
+
+        uksort($this->_callable, function ($a, $b) {
+            $a = $this->_priorities[$a];
+            $b = $this->_priorities[$b];
+
+            /*if (70000 <= PHP_VERSION_ID) {
+                return $this->_priorities[$ka] <=> $this->_priorities[$kb];
+            }*/
+
+            return  ($a < $b) ? 1 : (($a > $b) ? -1 : 0);
+        });
 
         return $this;
     }
