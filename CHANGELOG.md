@@ -1,3 +1,8 @@
+# 1.16.11.19
+
+  * Documentation: New `README.md` file. (Ivan Enderlin, 2016-10-18T16:34:43+02:00)
+  * Documentation: Update `support` properties. (Ivan Enderlin, 2016-10-05T20:36:30+02:00)
+
 # 1.16.03.15
 
   * Fix a typo (Metalaka, 2016-01-28T09:05:40+01:00)
