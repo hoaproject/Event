@@ -1,0 +1,57 @@
+language: php
+
+matrix:
+  include:
+    - php: 5.5
+    - php: 5.6
+    - php: 7.0
+    - php: 7.1
+      env:
+        - ENABLE_XDEBUG=true
+    - php: 7.1
+      env:
+        - ENABLE_DEVTOOLS=true
+    - php: nightly
+    - php: hhvm-3.12
+      sudo: required
+      dist: trusty
+      group: edge
+    - php: hhvm
+      sudo: required
+      dist: trusty
+      group: edge
+  allow_failures:
+    - php: nightly
+    - php: hhvm-3.12
+    - php: hhvm
+  fast_finish: true
+
+os:
+  - linux
+
+notifications:
+  irc: "chat.freenode.net#hoaproject"
+
+sudo: false
+
+env:
+  global:
+    - secure: "AAAAB3NzaC1yc2EAAAADAQABAAACAQCmp6O4qrZ3z12lSK/7O3To3j3EFBf3RZ4x37Hx3EWnqjCxuTueVh2r8ernInVPSQnEVUULbQCWmQiu1SazJE9X1ztQDnZWWRgwhrTBig/LGqhbq9u3EDHD7RcfhFrUarWjxpGmsV1BSjJSPOJzMXGmt710f98ImSKniFIcrbjPk0UKy0fuTJbe895EzxGEEnZDLiLpO6fKn0+ddbc2WGGidOuYksBNDAhcJeBuYrrvEhEaJNZ13IwZ39S1ZaaD8trTCuRS44ylJSV7n7HnXgeQe39ohofleuI9AnV5fymCgyc11OIE+REHQZmq9qPaHKSnZAW/bDcPjmzlUCHp4D9/RTeyppvl44YvqNFvr6u9q4S7sI6Ppf71y6lRK9CrqUEwQ2VXIkIlMd7KeijL2MJFsMK/Jb/hgKvEYjN2reNaIjrEVU1kfqCHXPHCi8iG+GDk0WQ62XA+auCCr4mP3AExNIgtD8MJunAouKZGreSf3eFrZiWFuEjPYDoWrDOcCr4g+JdHxd8tQ/cAUoacLAICbr/WbVGcsRXcLPG+llHmawWg6BveFHQpFih0YaRcWQSBpVd8pDvr2jtmQz1WrySaTdk1rNXJ62bmFWU+4Wm1uN+YBQyEZniSXE70DT79a+WC4gCcsZh8grDyk6+y7e2zBkN2SVQw35mXYXKtv2aNbQ=="
+
+cache:
+  directories:
+    - vendor/
+
+before_script:
+  - export PATH="$PATH:$HOME/.composer/vendor/bin"
+  - if [[ ! $ENABLE_XDEBUG ]]; then
+      phpenv config-rm xdebug.ini || echo "ext-xdebug is not available, cannot remove it.";
+    fi
+
+script:
+  - composer install
+  - vendor/bin/hoa test:run
+  - if [[ $ENABLE_DEVTOOLS ]]; then
+      composer global require friendsofphp/php-cs-fixer;
+      vendor/bin/hoa devtools:cs --diff --dry-run .;
+    fi
