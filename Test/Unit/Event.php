@@ -186,6 +186,47 @@ class Event extends Test\Unit\Suite
                     ->isIdenticalTo($event)
                 ->boolean($event->isListened())
                     ->isTrue();
+
+        $this
+            ->given(
+                $eventId = 'hoa://Event/Test',
+                $source  = new \Mock\Hoa\Event\Source(),
+                $bucket  = new LUT\Bucket(),
+                $called  = '',
+
+                SUT::register($eventId, $source),
+                SUT::getEvent($eventId)->attach(
+                    function (LUT\Bucket $receivedBucket) use (&$called) {
+                        $called .= '1';
+                    }, 100
+                ),
+                SUT::getEvent($eventId)->attach(
+                    function (LUT\Bucket $receivedBucket) use (&$called) {
+                        $called .= '2';
+                    }, 10
+                ),
+                SUT::getEvent($eventId)->attach(
+                    function (LUT\Bucket $receivedBucket) use (&$called) {
+                        $called .= '3';
+                    }
+                ),
+                SUT::getEvent($eventId)->attach(
+                    function (LUT\Bucket $receivedBucket) use (&$called) {
+                        $called .= '3';
+                    }, 0
+                ),
+                SUT::getEvent($eventId)->attach(
+                    function (LUT\Bucket $receivedBucket) use (&$called) {
+                        $called .= '4';
+                    }, -1
+                )
+            )
+            ->when($result = SUT::notify($eventId, $source, $bucket))
+            ->then
+                ->variable($result)
+                    ->isNull()
+                ->string($called)
+                    ->isIdenticalTo('12334');
     }
 
     public function case_detach()
