@@ -31,7 +31,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Hoa\\Event\\": "."
+            "Hoa\\Event\\": "Source"
         }
     },
     "extra": {
