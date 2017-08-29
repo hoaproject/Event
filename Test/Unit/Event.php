@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * Hoa
  *
@@ -41,28 +43,23 @@ use Hoa\Event\Event as SUT;
 use Hoa\Test;
 
 /**
- * Class \Hoa\Event\Test\Unit\Event.
- *
  * Test suite of the event class.
- *
- * @copyright  Copyright © 2007-2017 Hoa community
- * @license    New BSD License
  */
 class Event extends Test\Unit\Suite
 {
-    public function case_multiton()
+    public function case_multiton(): void
     {
         $this
             ->given($eventId = 'hoa://Event/Test')
             ->when($result = SUT::getEvent($eventId))
             ->then
                 ->object($result)
-                    ->isInstanceOf('Hoa\Event\Event')
+                    ->isInstanceOf(SUT::class)
                 ->object(SUT::getEvent($eventId))
                     ->isIdenticalTo($result);
     }
 
-    public function case_register_source_instance()
+    public function case_register_source_instance(): void
     {
         $this
             ->given(
@@ -77,7 +74,7 @@ class Event extends Test\Unit\Suite
                     ->isTrue();
     }
 
-    public function case_register_source_name()
+    public function case_register_source_name(): void
     {
         $this
             ->given(
@@ -92,7 +89,7 @@ class Event extends Test\Unit\Suite
                     ->isTrue();
     }
 
-    public function case_register_redeclare()
+    public function case_register_redeclare(): void
     {
         $this
             ->given(
@@ -100,39 +97,39 @@ class Event extends Test\Unit\Suite
                 $source  = new \Mock\Hoa\Event\Source(),
                 SUT::register($eventId, $source)
             )
-            ->exception(function () use ($eventId, $source) {
+            ->exception(function () use ($eventId, $source): void {
                 SUT::register($eventId, $source);
             })
-                ->isInstanceOf('Hoa\Event\Exception');
+                ->isInstanceOf(LUT\Exception::class);
     }
 
-    public function case_register_not_a_source_instance()
+    public function case_register_not_a_source_instance(): void
     {
         $this
             ->given(
                 $eventId = 'hoa://Event/Test',
                 $source  = new \StdClass()
             )
-            ->exception(function () use ($eventId, $source) {
+            ->exception(function () use ($eventId, $source): void {
                 $result = SUT::register($eventId, $source);
             })
-                ->isInstanceOf('Hoa\Event\Exception');
+                ->isInstanceOf(LUT\Exception::class);
     }
 
-    public function case_register_not_a_source_name()
+    public function case_register_not_a_source_name(): void
     {
         $this
             ->given(
                 $eventId = 'hoa://Event/Test',
                 $source  = 'StdClass'
             )
-            ->exception(function () use ($eventId, $source) {
+            ->exception(function () use ($eventId, $source): void {
                 $result = SUT::register($eventId, $source);
             })
-                ->isInstanceOf('Hoa\Event\Exception');
+                ->isInstanceOf(LUT\Exception::class);
     }
 
-    public function case_unregister()
+    public function case_unregister(): void
     {
         $this
             ->given(
@@ -146,7 +143,7 @@ class Event extends Test\Unit\Suite
                     ->isFalse();
     }
 
-    public function case_unregister_hard()
+    public function case_unregister_hard(): void
     {
         $this
             ->given(
@@ -163,7 +160,7 @@ class Event extends Test\Unit\Suite
                     ->isNotIdenticalTo($event);
     }
 
-    public function case_unregister_not_registered()
+    public function case_unregister_not_registered(): void
     {
         $this
             ->given($eventId = 'hoa://Event/Test')
@@ -173,12 +170,13 @@ class Event extends Test\Unit\Suite
                     ->isNull();
     }
 
-    public function case_attach()
+    public function case_attach(): void
     {
         $this
             ->given(
                 $event    = SUT::getEvent('hoa://Event/Test'),
-                $callable = function () { }
+                $callable = function (): void {
+                }
             )
             ->when($result = $event->attach($callable))
             ->then
@@ -188,12 +186,13 @@ class Event extends Test\Unit\Suite
                     ->isTrue();
     }
 
-    public function case_detach()
+    public function case_detach(): void
     {
         $this
             ->given(
                 $event    = SUT::getEvent('hoa://Event/Test'),
-                $callable = function () { },
+                $callable = function (): void {
+                },
                 $event->attach($callable)
             )
             ->when($result = $event->detach($callable))
@@ -204,12 +203,13 @@ class Event extends Test\Unit\Suite
                     ->isFalse();
     }
 
-    public function case_detach_unattached()
+    public function case_detach_unattached(): void
     {
         $this
             ->given(
                 $event    = SUT::getEvent('hoa://Event/Test'),
-                $callable = function () { }
+                $callable = function (): void {
+                }
             )
             ->when($result = $event->detach($callable))
             ->then
@@ -219,7 +219,7 @@ class Event extends Test\Unit\Suite
                     ->isFalse();
     }
 
-    public function case_is_listened()
+    public function case_is_listened(): void
     {
         $this
             ->given($event = SUT::getEvent('hoa://Event/Test'))
@@ -229,7 +229,7 @@ class Event extends Test\Unit\Suite
                     ->isFalse();
     }
 
-    public function case_notify()
+    public function case_notify(): void
     {
         $self = $this;
 
@@ -241,7 +241,7 @@ class Event extends Test\Unit\Suite
 
                 SUT::register($eventId, $source),
                 SUT::getEvent($eventId)->attach(
-                    function (LUT\Bucket $receivedBucket) use ($self, $source, $bucket, &$called) {
+                    function (LUT\Bucket $receivedBucket) use ($self, $source, $bucket, &$called): void {
                         $called = true;
 
                         $this
@@ -260,7 +260,7 @@ class Event extends Test\Unit\Suite
                     ->isTrue();
     }
 
-    public function case_notify_unregistered_event_id()
+    public function case_notify_unregistered_event_id(): void
     {
         $this
             ->given(
@@ -268,13 +268,13 @@ class Event extends Test\Unit\Suite
                 $source  = new \Mock\Hoa\Event\Source(),
                 $data    = new LUT\Bucket()
             )
-            ->exception(function () use ($eventId, $source, $data) {
+            ->exception(function () use ($eventId, $source, $data): void {
                 SUT::notify($eventId, $source, $data);
             })
-                ->isInstanceOf('Hoa\Event\Exception');
+                ->isInstanceOf(LUT\Exception::class);
     }
 
-    public function case_event_exists()
+    public function case_event_exists(): void
     {
         $this
             ->given(
@@ -288,7 +288,7 @@ class Event extends Test\Unit\Suite
                     ->isTrue();
     }
 
-    public function case_event_not_exists()
+    public function case_event_not_exists(): void
     {
         $this
             ->given($eventId = 'hoa://Event/Test')

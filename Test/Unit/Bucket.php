@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * Hoa
  *
@@ -41,27 +43,22 @@ use Hoa\Event\Bucket as SUT;
 use Hoa\Test;
 
 /**
- * Class \Hoa\Event\Test\Unit\Bucket.
- *
  * Test suite of the bucket.
- *
- * @copyright  Copyright © 2007-2017 Hoa community
- * @license    New BSD License
  */
 class Bucket extends Test\Unit\Suite
 {
-    public function case_constructor()
+    public function case_constructor(): void
     {
         $this
             ->when($result = new SUT('foo'))
             ->then
                 ->object($result)
-                    ->isInstanceOf('Hoa\Event\Bucket')
+                    ->isInstanceOf(SUT::class)
                 ->string($result->getData())
                     ->isEqualTo('foo');
     }
 
-    public function case_send()
+    public function case_send(): void
     {
         $self = $this;
 
@@ -74,7 +71,7 @@ class Bucket extends Test\Unit\Suite
                 $bucket = new SUT('foo'),
 
                 LUT::getEvent($eventId)->attach(
-                    function (SUT $receivedBucket) use ($self, $bucket, &$called) {
+                    function (SUT $receivedBucket) use ($self, $bucket, &$called): void {
                         $called = true;
 
                         $self
@@ -91,7 +88,7 @@ class Bucket extends Test\Unit\Suite
                     ->isTrue();
     }
 
-    public function case_set_source()
+    public function case_set_source(): void
     {
         $this
             ->given(
@@ -114,7 +111,7 @@ class Bucket extends Test\Unit\Suite
                     ->isIdenticalTo($sourceB);
     }
 
-    public function case_set_data()
+    public function case_set_data(): void
     {
         $this
             ->given(

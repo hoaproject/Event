@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * Hoa
  *
@@ -40,21 +42,16 @@ use Hoa\Event\Exception as SUT;
 use Hoa\Test;
 
 /**
- * Class \Hoa\Event\Test\Unit\Exception.
- *
  * Test suite of the exception.
- *
- * @copyright  Copyright © 2007-2017 Hoa community
- * @license    New BSD License
  */
 class Exception extends Test\Unit\Suite
 {
-    public function case_hoa_exception()
+    public function case_hoa_exception(): void
     {
         $this
             ->when($result = new SUT('foo', 0))
             ->then
                 ->object($result)
-                    ->isInstanceOf('Hoa\Exception\Exception');
+                    ->isInstanceOf(SUT::class);
     }
 }

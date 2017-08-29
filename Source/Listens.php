@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * Hoa
  *
@@ -37,32 +39,21 @@
 namespace Hoa\Event;
 
 /**
- * Trait \Hoa\Event\Listens.
- *
  * Implementation of a listener.
- *
- * @copyright  Copyright © 2007-2017 Hoa community
- * @license    New BSD License
  */
 trait Listens
 {
     /**
-     * Listener instance.
-     *
-     * @var \Hoa\Event\Listener
+     * Listener instance of type `Hoa\Event\Listener`.
      */
     protected $_listener = null;
 
 
 
     /**
-     * Attach a callable to a listenable component.
-     *
-     * @param   string  $listenerId    Listener ID.
-     * @param   mixed   $callable      Callable.
-     * @return  \Hoa\Event\Listenable
+     * Attaches a callable to a listenable component.
      */
-    public function on($listenerId, $callable)
+    public function on(string $listenerId, $callable): Listenable
     {
         $listener = $this->getListener();
 
@@ -81,12 +72,9 @@ trait Listens
     }
 
     /**
-     * Set listener.
-     *
-     * @param  \Hoa\Event\Listener  $listener    Listener.
-     * @return \Hoa\Event\Listener
+     * Sets a new listener.
      */
-    protected function setListener(Listener $listener)
+    protected function setListener(Listener $listener): ?Listener
     {
         $old             = $this->_listener;
         $this->_listener = $listener;
@@ -95,11 +83,9 @@ trait Listens
     }
 
     /**
-     * Get listener.
-     *
-     * @return \Hoa\Event\Listener
+     * Returns the listener.
      */
-    protected function getListener()
+    protected function getListener(): ?Listener
     {
         return $this->_listener;
     }

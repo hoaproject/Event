@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * Hoa
  *
@@ -45,12 +47,11 @@ use Hoa\Test;
  *
  * Test suite of the listens trait.
  *
- * @copyright  Copyright © 2007-2017 Hoa community
  * @license    New BSD License
  */
 class Listens extends Test\Unit\Suite
 {
-    public function case_set_listener()
+    public function case_set_listener(): void
     {
         $this
             ->given(
@@ -63,7 +64,7 @@ class Listens extends Test\Unit\Suite
                     ->isNull();
     }
 
-    public function case_get_listener()
+    public function case_get_listener(): void
     {
         $this
             ->given(
@@ -77,7 +78,7 @@ class Listens extends Test\Unit\Suite
                     ->isIdenticalTo($listener);
     }
 
-    public function case_on()
+    public function case_on(): void
     {
         $this
             ->given(
@@ -101,7 +102,7 @@ class Listens extends Test\Unit\Suite
                     ->isTrue();
     }
 
-    public function case_on_unregistered_listener()
+    public function case_on_unregistered_listener(): void
     {
         $this
             ->given(
@@ -109,7 +110,7 @@ class Listens extends Test\Unit\Suite
                 $listener   = new LUT\Listener($listenable, ['foo']),
                 $listenable->_setListener($listener)
             )
-            ->exception(function () use ($listenable) {
+            ->exception(function () use ($listenable): void {
                 $listenable->on('bar', null);
             })
                 ->isInstanceOf('Hoa\Event\Exception');
@@ -130,7 +131,7 @@ class _Listenable implements LUT\Listenable
         return $this->getListener();
     }
 
-    public function doSomethingThatFires()
+    public function doSomethingThatFires(): void
     {
         $this->getListener()->fire('foo', new LUT\Bucket('bar'));
 

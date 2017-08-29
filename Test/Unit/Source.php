@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * Hoa
  *
@@ -39,21 +41,16 @@ namespace Hoa\Event\Test\Unit;
 use Hoa\Test;
 
 /**
- * Class \Hoa\Event\Test\Unit\Source.
- *
  * Test suite of the source interface.
- *
- * @copyright  Copyright © 2007-2017 Hoa community
- * @license    New BSD License
  */
 class Source extends Test\Unit\Suite
 {
-    public function case_interface()
+    public function case_interface(): void
     {
         $this
             ->when($result = new \Mock\Hoa\Event\Source())
             ->then
                 ->object($result)
-                    ->isInstanceOf('Hoa\Event\Source');
+                    ->isInstanceOf(\Hoa\Event\Source::class);
     }
 }

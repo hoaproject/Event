@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * Hoa
  *
@@ -41,16 +43,11 @@ use Hoa\Event\Listener as SUT;
 use Hoa\Test;
 
 /**
- * Class \Hoa\Event\Test\Unit\Listener.
- *
  * Test suite of the listener.
- *
- * @copyright  Copyright © 2007-2017 Hoa community
- * @license    New BSD License
  */
 class Listener extends Test\Unit\Suite
 {
-    public function case_constructor()
+    public function case_constructor(): void
     {
         $this
             ->given(
@@ -60,7 +57,7 @@ class Listener extends Test\Unit\Suite
             ->when($result = new SUT($source, $ids))
             ->then
                 ->object($result)
-                    ->isInstanceOf('Hoa\Event\Listener')
+                    ->isInstanceOf(SUT::class)
                 ->boolean($result->listenerExists('foo'))
                     ->isTrue()
                 ->boolean($result->listenerExists('bar'))
@@ -69,7 +66,7 @@ class Listener extends Test\Unit\Suite
                     ->isTrue();
     }
 
-    public function case_attach()
+    public function case_attach(): void
     {
         $this
             ->given(
@@ -88,22 +85,23 @@ class Listener extends Test\Unit\Suite
                     ->isEqualTo([42]);
     }
 
-    public function case_attach_to_an_undefined_listener()
+    public function case_attach_to_an_undefined_listener(): void
     {
         $this
             ->given(
                 $source     = new \Mock\Hoa\Event\Listenable(),
                 $listenerId = 'bar',
                 $listener   = new SUT($source, ['foo', 'baz']),
-                $callable   = function () { }
+                $callable   = function (): void {
+                }
             )
-            ->exception(function () use ($listener, $listenerId, $callable) {
+            ->exception(function () use ($listener, $listenerId, $callable): void {
                 $listener->attach($listenerId, $callable);
             })
-                ->isInstanceOf('Hoa\Event\Exception');
+                ->isInstanceOf(LUT\Exception::class);
     }
 
-    public function case_detach()
+    public function case_detach(): void
     {
         $this
             ->given(
@@ -123,14 +121,15 @@ class Listener extends Test\Unit\Suite
                     ->isEmpty();
     }
 
-    public function case_detach_an_undefined_listener()
+    public function case_detach_an_undefined_listener(): void
     {
         $this
             ->given(
                 $source     = new \Mock\Hoa\Event\Listenable(),
                 $listenerId = 'bar',
                 $listener   = new SUT($source, ['foo', 'baz']),
-                $callable   = function () { }
+                $callable   = function (): void {
+                }
             )
             ->when($result = $listener->detach($listenerId, $callable))
             ->then
@@ -138,7 +137,7 @@ class Listener extends Test\Unit\Suite
                     ->isIdenticalTo($listener);
     }
 
-    public function case_detach_all()
+    public function case_detach_all(): void
     {
         $this
             ->given(
@@ -154,7 +153,7 @@ class Listener extends Test\Unit\Suite
                     ->isFalse();
     }
 
-    public function case_detach_all_with_an_undefined_listener()
+    public function case_detach_all_with_an_undefined_listener(): void
     {
         $this
             ->given(
@@ -168,7 +167,7 @@ class Listener extends Test\Unit\Suite
                     ->isIdenticalTo($listener);
     }
 
-    public function case_listener_exists()
+    public function case_listener_exists(): void
     {
         $this
             ->given(
@@ -189,7 +188,7 @@ class Listener extends Test\Unit\Suite
                     ->isTrue();
     }
 
-    public function case_fire()
+    public function case_fire(): void
     {
         $self = $this;
 
@@ -224,7 +223,7 @@ class Listener extends Test\Unit\Suite
                     ->isTrue();
     }
 
-    public function case_fire_an_undefined_listenerId()
+    public function case_fire_an_undefined_listenerId(): void
     {
         $this
             ->given(
@@ -232,9 +231,9 @@ class Listener extends Test\Unit\Suite
                 $ids      = [],
                 $listener = new SUT($source, $ids)
             )
-            ->exception(function () use ($listener) {
+            ->exception(function () use ($listener): void {
                 $listener->fire('foo', new LUT\Bucket());
             })
-                ->isInstanceOf('Hoa\Event\Exception');
+                ->isInstanceOf(LUT\Exception::class);
     }
 }
