@@ -35,7 +35,7 @@ your dependencies, you need to
 require [`hoa/event`](https://packagist.org/packages/hoa/event):
 
 ```sh
-$ composer require hoa/event '~1.0'
+$ composer require hoa/event '~2.0'
 ```
 
 For more installation procedures, please read [the Source
